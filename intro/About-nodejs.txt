@@ -1,0 +1,9 @@
+About Node js
+1. Node.js is a JavaScript runtime build on Chrome’s V8 JavaScript engine.
+2. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient.
+3. Node.js Package ecosystem,npm is the largest ecosystem of open source libraries in the world.
+4. Node js engine are devloped in C++.
+5. we can't access document and window object in node mode, because it's available during runtime in browser.
+6. Node provide global object where we can find various object and method.
+7. It provide process object.
+8. NodeJs using c++ binding to provide JavaScript code to V8 engine and then V8 engine run the code.
