@@ -12,4 +12,4 @@ To add key in github
 4. Before adding the new SSH key to the ssh-agent first ensure the ssh-agent is running by executing: ```eval "$(ssh-agent -s)"```
 5. Once the ssh-agent is running the following command will add the new SSH key to the local SSH agent. ```ssh-add -K /Users/you/.ssh/id_rsa```
 6. The new SSH key is now registered and ready to use!
-7. To copy ssh public key, then run command ```pbcopy < ~/.ssh/id_rsa.pub```.
+7. To copy ssh public key, then run command ```pbcopy < ~/.ssh/id_rsa.pub```
