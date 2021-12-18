@@ -1,0 +1,14 @@
+{
+  "name": "node-3rd-edition",
+  "version": "1.0.0",
+  "description": "Learn about nodejs",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "dineshkashera@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "validator": "^13.7.0"
+  }
+}
