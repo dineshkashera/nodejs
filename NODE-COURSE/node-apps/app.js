@@ -10,3 +10,5 @@ log(validator.isEmail('dineshkashera@gmail.com'));//check is email
 log(validator.isURL('https:google.com'));//check valid URL
 
 log(chalk.blue.bold.bgWhite('Success!'));
+
+log(process.argv);//to get the parameters from terminal
