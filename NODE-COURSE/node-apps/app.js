@@ -9,4 +9,4 @@ log(getnotes());//Get notes String
 log(validator.isEmail('dineshkashera@gmail.com'));//check is email
 log(validator.isURL('https:google.com'));//check valid URL
 
-log(chalk.blue('Success!'));
+log(chalk.blue.bold.bgWhite('Success!'));
