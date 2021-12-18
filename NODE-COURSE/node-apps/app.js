@@ -1,10 +1,12 @@
-const fs = require('fs');
+const fs            =   require('fs');
+const getnotes      =   require('./module-exports');
+const validator     =   require('validator');
+const chalk         =   require('chalk');
+
+const log           =   console.log;
 fs.writeFileSync('notes.txt','hello, i am dineshkashera');
+log(getnotes());//Get notes String
+log(validator.isEmail('dineshkashera@gmail.com'));//check is email
+log(validator.isURL('https:google.com'));//check valid URL
 
-const getnotes = require('./module-exports');
-console.log(getnotes());
-
-const validator = require('validator');
-console.log(validator.isEmail('dineshkashera@gmail.com'));//check is email
-
-console.log(validator.isURL('https:google.com'));
+log(chalk.blue('Success!'));
