@@ -70,6 +70,22 @@ yargs.command({
 });
 
 yargs.command({
+    command:'searchNotes',
+    describe:'Search Notes',
+    builder:{
+        title:{
+            describe:'Search by title',
+            demandOption: true,
+            type:'string'
+        }
+    },
+    handler(argv){
+        notes.searchNotes(argv.title);
+    }
+});
+
+
+yargs.command({
     command:'listNotes',
     describe:'List all added notes',
     handler(){

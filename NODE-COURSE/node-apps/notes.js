@@ -65,6 +65,18 @@ const removeNotes = (removeId) => {
     }
 }
 
+const searchNotes = (title) => {
+    const getData = readNotes(filePath);
+    const datafound = getData.find((singledata) => singledata.title === title);
+
+    if(datafound){
+        console.log(chalk.green.bold(datafound.title));
+        console.log(chalk.blue.bold(datafound.body));
+    }else{
+        console.log(chalk.inverse.red('Data not found'));
+    }
+}
+
 const writefile = (Notes) => {
     const NotesStingfy = JSON.stringify(Notes);
     fs.writeFileSync(filePath,NotesStingfy);
@@ -73,5 +85,6 @@ const writefile = (Notes) => {
 module.exports = {
     'addNotes':addNotes,
     'removeNotes':removeNotes,
-    'listNotes':listNotes
+    'listNotes':listNotes,
+    'searchNotes':searchNotes
 }
