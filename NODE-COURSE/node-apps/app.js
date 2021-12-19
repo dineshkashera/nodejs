@@ -3,6 +3,7 @@ const getnotes      =   require('./module-exports');
 const validator     =   require('validator');
 const chalk         =   require('chalk');
 const yargs         =   require('yargs');
+const notes         =   require('./notes');
 
 const log           =   console.log;
 fs.writeFileSync('notes.txt','hello, i am dineshkashera');
@@ -34,17 +35,37 @@ yargs.command({
 });
 
 yargs.command({
-    command:'comment',
-    describe:'get comment',
+    command:'add',
+    describe:'Add Notes',
     builder:{
-        add:{
-            describe:'Add new comment',
+        title:{
+            describe:'Add comment title',
+            demandOption: true,
+            type:'string'
+        },
+        body:{
+            describe: 'Add comment body',
             demandOption: true,
             type:'string'
         }
     },
     handler:function(argv){
-        console.log('Comment Added:' + argv.add)
+        notes.addNotes(argv.title,argv.body);
+    }
+});
+
+yargs.command({
+    command:'remove',
+    describe:'remove comment',
+    builder:{
+        id:{
+            describe:'Pass id to delete',
+            demandOption: true,
+            type:'integer'
+        }
+    },
+    handler:function(argv){
+        notes.removeNotes(argv.id);
     }
 });
 
