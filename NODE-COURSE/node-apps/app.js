@@ -69,4 +69,12 @@ yargs.command({
     }
 });
 
+yargs.command({
+    command:'listNotes',
+    describe:'List all added notes',
+    handler(){
+        notes.listNotes();
+    }
+});
+
 yargs.parse();
