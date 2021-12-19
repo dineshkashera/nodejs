@@ -1,17 +1,15 @@
 const fs = require('fs');
 const filePath = './sampleData/notes.json';
-const addNotes = function (title, body){
+const addNotes = (title, body) => {
     const getData = readNotes(filePath);
     writeNotes(getData,title,body,filePath);
 
 }
 
-const removeNotes = function(removeId){
+const removeNotes = (removeId) => {
     const Notes = readNotes(filePath);
     const prevLength = Notes.length;
-    const keepData = Notes.filter(function (note,key){
-       return removeId !== key;
-    });
+    const keepData = Notes.filter( (note,key) => removeId !== key);
 
     if(keepData.length < prevLength){
         writefile(keepData);
@@ -22,7 +20,7 @@ const removeNotes = function(removeId){
 
 }
 
-const readNotes = function (filePath){
+const readNotes = (filePath) => {
     try {
         const getBinaryData = fs.readFileSync(filePath);
         const tojsonString  = getBinaryData.toString();
@@ -34,13 +32,9 @@ const readNotes = function (filePath){
     }
 }
 
-const writeNotes = function(Notes,title,body,filePath){
+const writeNotes = (Notes,title,body,filePath) => {
 
-    const findDuplicateEntry = Notes.filter(function(note){
-        if(note.title === title){
-            return true;
-        }
-    });
+    const findDuplicateEntry = Notes.filter((note) => note.title === title);
 
     if(findDuplicateEntry.length === 0){
         Notes.push({
@@ -56,7 +50,7 @@ const writeNotes = function(Notes,title,body,filePath){
     }
 }
 
-const writefile = function(Notes){
+const writefile = (Notes) => {
     const NotesStingfy = JSON.stringify(Notes);
     fs.writeFileSync(filePath,NotesStingfy);
 }

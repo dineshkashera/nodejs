@@ -21,7 +21,7 @@ yargs.version('1.1.0');
 yargs.command({
     command:'list',
     describe:'Listing call',
-    handler:function(){
+    handler(){
         console.log('listing handler call')
     }
 });
@@ -29,7 +29,7 @@ yargs.command({
 yargs.command({
     command:'read',
     describe:'reading notes call',
-    handler:function(){
+    handler(){
         console.log('reading handler call')
     }
 });
@@ -49,7 +49,7 @@ yargs.command({
             type:'string'
         }
     },
-    handler:function(argv){
+    handler(argv){
         notes.addNotes(argv.title,argv.body);
     }
 });
@@ -64,7 +64,7 @@ yargs.command({
             type:'integer'
         }
     },
-    handler:function(argv){
+    handler(argv){
         notes.removeNotes(argv.id);
     }
 });
