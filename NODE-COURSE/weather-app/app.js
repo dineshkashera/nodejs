@@ -18,21 +18,31 @@ yargs.command({
                 }
         },
         handler(argv){
-                getCurrentTemprature(argv.location);
+                getCurrentTemprature(argv.location,(getCoordinate) => {
+                    const reqtempURI = stackapiURL+stackQuery+getCoordinate;
+                    request({url:reqtempURI,json:true},(error, response) => {
+                        const weather     = response.body.current;
+                        const temperature = weather.temperature;
+                        const precip      = weather.precip;
+                        const msg         = 'It is currently '+temperature+' degree, there is '+precip+'% chance of rain';
+                        console.log(msg);
+                    });
+                });
         }
 });
 
-const getCurrentTemprature = (location) => {
+const getCurrentTemprature = (location,callback) => {
         const requestURI = metaboxURL+location+'.json'+metaquery;
         request({url:requestURI,json:true},(error, response) => {
             if(error){
                  console.log(error);
             }else {
                     const getLatLang = response.body;
-                    if(getLatLang.features.length > 0){
+
+                    if((getLatLang.hasOwnProperty('features')) && (getLatLang.features.length > 0) && (getLatLang.features.length !== null)){
                         const latlong = getLatLang.features['0'].center;
                         const coordinate = latlong.reverse().toString();
-                        console.log(coordinate);
+                        callback(coordinate);//use of callback function
                     }else{
                         console.log('Incorrect location enter!');
                     }
@@ -42,10 +52,3 @@ const getCurrentTemprature = (location) => {
 }
 
 yargs.parse();
-/*request({url:stackapiURL,json:true},(error, response) => {
-        const weather = response.body.current;
-        const temperature = weather.temperature;
-        const precip      = weather.precip;
-        const msg         = 'It is currently '+temperature+' degree, there is '+precip+'% chance of rain';
-        console.log(msg);
-});*/
