@@ -1,10 +1,8 @@
 const request           =    require('request');
 const yargs             =    require('yargs');
+const forcast           =    require('./get-temprature.js');
 const stackapiURL       =    'http://api.weatherstack.com/current?access_key=dc65e012d473c1e07f20ee3a2bb53561';
 const stackQuery        =    '&query=';
-const metaboxURL        =    'https://api.mapbox.com/geocoding/v5/mapbox.places/';
-const mapboxAPI         =    'pk.eyJ1IjoiZGluZXNoa2FzaGVyYSIsImEiOiJja3hleGttOWcxNmc5MnVtbTl3ajV6bm16In0.fxwuVxBZNcI630kRrxcYmw';
-const metaquery         =    '?access_token='+mapboxAPI;
 
 //create command to get temprature by place name
 yargs.command({
@@ -18,7 +16,7 @@ yargs.command({
                 }
         },
         handler(argv){
-                getCurrentTemprature(argv.location,(getCoordinate) => {
+            forcast.getCurrentTemprature(argv.location,(getCoordinate) => {
                     const reqtempURI = stackapiURL+stackQuery+getCoordinate;
                     request({url:reqtempURI,json:true},(error, {body}) => {
                         const weather     = body.current;
@@ -29,24 +27,5 @@ yargs.command({
                 });
         }
 });
-
-const getCurrentTemprature = (location,callback) => {
-        const requestURI = metaboxURL+location+'.json'+metaquery;
-        request({url:requestURI,json:true},(error, {body}) => {
-            if(error){
-                 console.log(error);
-            }else {
-                    const getLatLang = body;
-
-                    if((getLatLang.hasOwnProperty('features')) && (getLatLang.features.length > 0) && (getLatLang.features.length !== null)){
-                        const {1:lat,0:long} = getLatLang.features['0'].center;
-                        callback(lat+','+long);//use of callback function
-                    }else{
-                        console.log('Incorrect location enter!');
-                    }
-
-            }
-        });
-}
 
 yargs.parse();
