@@ -20,10 +20,9 @@ yargs.command({
         handler(argv){
                 getCurrentTemprature(argv.location,(getCoordinate) => {
                     const reqtempURI = stackapiURL+stackQuery+getCoordinate;
-                    request({url:reqtempURI,json:true},(error, response) => {
-                        const weather     = response.body.current;
-                        const temperature = weather.temperature;
-                        const precip      = weather.precip;
+                    request({url:reqtempURI,json:true},(error, {body}) => {
+                        const weather     = body.current;
+                        const {temperature,precip} = weather;
                         const msg         = 'It is currently '+temperature+' degree, there is '+precip+'% chance of rain';
                         console.log(msg);
                     });
@@ -40,9 +39,8 @@ const getCurrentTemprature = (location,callback) => {
                     const getLatLang = response.body;
 
                     if((getLatLang.hasOwnProperty('features')) && (getLatLang.features.length > 0) && (getLatLang.features.length !== null)){
-                        const latlong = getLatLang.features['0'].center;
-                        const coordinate = latlong.reverse().toString();
-                        callback(coordinate);//use of callback function
+                        const {1:lat,0:long} = getLatLang.features['0'].center;
+                        callback(lat+','+long);//use of callback function
                     }else{
                         console.log('Incorrect location enter!');
                     }
