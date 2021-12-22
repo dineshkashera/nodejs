@@ -32,11 +32,11 @@ yargs.command({
 
 const getCurrentTemprature = (location,callback) => {
         const requestURI = metaboxURL+location+'.json'+metaquery;
-        request({url:requestURI,json:true},(error, response) => {
+        request({url:requestURI,json:true},(error, {body}) => {
             if(error){
                  console.log(error);
             }else {
-                    const getLatLang = response.body;
+                    const getLatLang = body;
 
                     if((getLatLang.hasOwnProperty('features')) && (getLatLang.features.length > 0) && (getLatLang.features.length !== null)){
                         const {1:lat,0:long} = getLatLang.features['0'].center;
