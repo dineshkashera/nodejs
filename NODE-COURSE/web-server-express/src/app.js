@@ -18,9 +18,10 @@ app.use(express.static(publicDirPath));
 
 app.get('',(req, res) => {
   res.render('index',{
-      title:"Start",
+      title:"Weather",
       link:"About Us",
-      copywrite:"by dineshkashera"
+      copywrite:"by dineshkashera",
+      class:"index"
   });
 });
 
@@ -28,7 +29,8 @@ app.get('/about',(req, res) => {
     res.render('about',{
         title:"About us",
         link:"Home",
-        copywrite:"by dineshkashera"
+        copywrite:"by dineshkashera",
+        class:"about-us"
     });
 });
 
@@ -49,7 +51,8 @@ app.get('/about/*',(req,res) => {
         title:"404 Error page",
         link:"Home",
         errorMessage:"Url not found",
-        copywrite:"by dineshkashera"
+        copywrite:"by dineshkashera",
+        class:"about-us-404"
     });
 });
 
@@ -58,7 +61,8 @@ app.get('*',(req,res) => {
         title:"404 Error page",
         link:"Home",
         errorMessage:"page not found",
-        copywrite:"by dineshkashera"
+        copywrite:"by dineshkashera",
+        class:"error-404"
     });
 });
 
