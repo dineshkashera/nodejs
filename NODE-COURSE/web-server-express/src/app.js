@@ -45,11 +45,21 @@ app.get('/about-us',(req,res) => {
 });*/
 
 app.get('/about/*',(req,res) => {
-    res.send('Url not found');
+    res.render('404',{
+        title:"404 Error page",
+        link:"Home",
+        errorMessage:"Url not found",
+        copywrite:"by dineshkashera"
+    });
 });
 
 app.get('*',(req,res) => {
-    res.send('Page not found');
+    res.render('404',{
+        title:"404 Error page",
+        link:"Home",
+        errorMessage:"page not found",
+        copywrite:"by dineshkashera"
+    });
 });
 
 app.listen(4000,() => {
