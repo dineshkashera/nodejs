@@ -44,14 +44,13 @@ app.get('/about-us',(req,res) => {
     res.send('About us page loaded');
 });*/
 
-app.get('*',(req,res) => {
-    res.send('Page not found');
-});
-
 app.get('/about/*',(req,res) => {
     res.send('Url not found');
 });
 
+app.get('*',(req,res) => {
+    res.send('Page not found');
+});
 
 app.listen(4000,() => {
     console.log('server started successfully');
