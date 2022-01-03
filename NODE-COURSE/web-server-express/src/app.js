@@ -34,6 +34,17 @@ app.get('/about',(req, res) => {
     });
 });
 
+app.get('/weather',(req,res) => {
+    if(req.query.address){
+        res.send({
+            address:req.query.address
+        });
+    }else{
+        res.send({
+            error:"No address given"
+        });
+    }
+});
 /*app.get('',(req,res) => {
     res.send('hello world');
 });
