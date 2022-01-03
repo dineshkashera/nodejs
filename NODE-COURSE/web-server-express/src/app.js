@@ -1,7 +1,11 @@
-const express   = require('express');
-const path      = require('path');
-const app       = express();
-const hbs       = require('hbs');
+const express               =   require('express');
+const path                  =   require('path');
+const app                   =   express();
+const hbs                   =   require('hbs');
+const request               =   require('request');
+const forecast              =   require('./utils/get-temprature');
+const stackapiURL           =   'http://api.weatherstack.com/current?access_key=dc65e012d473c1e07f20ee3a2bb53561';
+const stackQuery            =   '&query=';
 
 //defining path for express
 const publicDirPath = path.join(__dirname,'../public');
@@ -35,15 +39,32 @@ app.get('/about',(req, res) => {
 });
 
 app.get('/weather',(req,res) => {
-    if(req.query.address){
-        res.send({
-            address:req.query.address
+    //if(req.query.address){
+        forecast.getCurrentTemprature(req.query.address,({latlong ,location}) => {
+
+            const reqtempURI = stackapiURL+stackQuery+latlong;
+            request({url:reqtempURI,json:true},(error, {body}) => {
+                if(error){
+                    res.send({
+                        error:"INCORRECT INPUT GIVEN"
+                    });
+                }
+
+                const weather     = body.current;
+                const {temperature,precip} = weather;
+                const msg         = 'It is currently '+temperature+' degree, there is '+precip+'% chance of rain';
+                res.send({
+                    address:req.query.address,
+                    location:location,
+                    forecast:msg
+                });
+            });
         });
-    }else{
-        res.send({
-            error:"No address given"
-        });
-    }
+   // }else{
+     //   res.send({
+       //     error:"No address given"
+        //});
+    //}
 });
 /*app.get('',(req,res) => {
     res.send('hello world');
