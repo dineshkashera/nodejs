@@ -1,4 +1,4 @@
-console.log("lodded frontend js");
+console.log("loaded frontend js");
 $(document).ready(function (e){
     $('form#forecast button').click(function(e){
         e.preventDefault();
@@ -6,7 +6,7 @@ $(document).ready(function (e){
         jQuery('.loader').addClass('show');
        const getLocation =  jQuery('form#forecast input').val();
 
-           fetch('http://localhost:4000/weather?address='+getLocation).then((response) => {
+           fetch('/weather?address='+getLocation).then((response) => {
                response.json().then((data) => {
                    if(data.error){
                        console.log('Invalid request');

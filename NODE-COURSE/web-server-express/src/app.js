@@ -6,7 +6,7 @@ const request               =   require('request');
 const forecast              =   require('./utils/get-temprature');
 const stackapiURL           =   'http://api.weatherstack.com/current?access_key=dc65e012d473c1e07f20ee3a2bb53561';
 const stackQuery            =   '&query=';
-
+const port                  =   process.env.PORT || 3000;
 //defining path for express
 const publicDirPath = path.join(__dirname,'../public');
 const hbsViewPath = path.join(__dirname,'../templates');
@@ -98,6 +98,6 @@ app.get('*',(req,res) => {
     });
 });
 
-app.listen(4000,() => {
-    console.log('server started successfully');
+app.listen(port,() => {
+    console.log('server started successfully on port::' + port);
 });
