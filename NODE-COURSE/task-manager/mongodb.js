@@ -2,6 +2,11 @@ const mongodb = require('mongodb');
 const mongoClient = mongodb.MongoClient;
 const connectionUrl = 'mongodb://127.0.0.1:27017';
 const dbName = 'task-manager';
+const ObjectId = mongodb.ObjectId;
+
+//object id is combination of timestamp, hexa decimal code and store in binary form
+const id = new ObjectId();
+console.log(id.toHexString());
 
 //connect db
 mongoClient.connect(connectionUrl,{useNewUrlParser:true},(error,client) => {
@@ -15,6 +20,7 @@ mongoClient.connect(connectionUrl,{useNewUrlParser:true},(error,client) => {
         'name':'dineshkashera',
         'role':'software developer'
     });*/
+    //
     const manydocument = [{
         "description":"desc 1",
         "completed":true
@@ -34,6 +40,8 @@ mongoClient.connect(connectionUrl,{useNewUrlParser:true},(error,client) => {
     },{
         "description":"desc 3",
         "completed":true
+    },{
+        "no-fields":"desc 3"
     }],(error,result) => {
         if(error){
             return console.log(error);
