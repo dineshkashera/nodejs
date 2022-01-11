@@ -49,4 +49,7 @@ mongoClient.connect(connectionUrl,{useNewUrlParser:true},(error,client) => {
 
         console.log(result.ops);
     });
+    //find https://mongodb.github.io/node-mongodb-native/4.2/classes/Collection.html#find
+    //findOne
+    //cursor
 });
