@@ -20,18 +20,8 @@ mongoClient.connect(connectionUrl,{useNewUrlParser:true},(error,client) => {
         'name':'dineshkashera',
         'role':'software developer'
     });*/
-    //
-    const manydocument = [{
-        "description":"desc 1",
-        "completed":true
-    },{
-        "description":"desc 2",
-        "completed":false
-    },{
-        "description":"desc 3",
-        "completed":true
-    }];
-    db.collection('tasks').insertMany([{
+
+  /*  db.collection('tasks').insertMany([{
         "description":"desc 1",
         "completed":true
     },{
@@ -48,8 +38,24 @@ mongoClient.connect(connectionUrl,{useNewUrlParser:true},(error,client) => {
         }
 
         console.log(result.ops);
-    });
+    }); */
     //find https://mongodb.github.io/node-mongodb-native/4.2/classes/Collection.html#find
     //findOne
     //cursor
+
+    //update many
+    //https://docs.mongodb.com/manual/reference/method/db.collection.updateMany/
+    db.collection('tasks').updateMany({},
+        [
+            {
+                $set: {
+                        completed:true
+                }
+            }
+            ]
+    ).then((result) => {
+        console.log('Success:'+result);
+    }).catch((error) => {
+        console.log('Error'+error);
+    });
 });
