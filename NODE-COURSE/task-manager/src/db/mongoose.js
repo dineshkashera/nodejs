@@ -9,14 +9,20 @@ mongoose.connect(connectionUrl,{
 const User = mongoose.model('user',{
     name:{
         type:String,
-        require:true
+        required:true
     },
     age:{
         type:Number
     },
     globalAccess:{
         type:Boolean,
-        require:true
+        required:true
+    },
+    password:{
+        type:String,
+        trim:true,
+        required:true,
+        minLength:7
     }
 });
 
@@ -24,7 +30,8 @@ const User = mongoose.model('user',{
 const insertMe = new User({
     name:'ruhi',
     age:30,
-    globalAccess:true
+    globalAccess:true,
+    password:'sdsdsdsds'
 });
 
 //insert new document into db using mongoose model

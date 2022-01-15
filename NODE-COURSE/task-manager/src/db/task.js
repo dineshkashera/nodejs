@@ -10,16 +10,16 @@ mongoose.connect(connectionUrl,{
 const task = mongoose.model('task',{
     description:{
         type:String,
-        require:true,
+        required:true,
         trim:true
     },
     completed:{
         type:Boolean,
-        require:true
+        required:true
     },
     email:{
         type:String,
-        require:true,
+        required:true,
         trim:true
     }
 });
