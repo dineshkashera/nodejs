@@ -9,7 +9,9 @@ const User = require('./model/user');//get user model
 
 app.post('/user',(req,res) => {
 
-    User(req.body).save().then((res) => {
+    const user = new User(req.body);
+
+    user.save().then(() => {
         res.status('201').send({'success':true,'data':User(req.body)});
     }).catch((error) => {
         res.status('400').send({'success':false,'data':error});
