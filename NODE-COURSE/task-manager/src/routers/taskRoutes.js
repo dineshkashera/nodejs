@@ -11,7 +11,7 @@ router.post('/task',async (req, res)=>{
         await task.save()
         res.status('201').send({'success':true,"data":'Task Created','task-obj':task});
     }catch (e) {
-        res.status('400').send({'success':false,'data':error.message});
+        res.status('400').send({'success':false,'data':e});
     }
 
     /*task.save().then(() => {
@@ -27,7 +27,7 @@ router.get('/tasks',(req,res) => {
     Task.find({}).then((getTasks)=>{
         res.status('200').send({'status':true,'data':getTasks})
     }).catch((e) => {
-        res.status('400').send({'success':false,'data':error.message})
+        res.status('400').send({'success':false,'data':e})
     });
 });
 
@@ -41,7 +41,7 @@ router.get('/task/:id',(req,res) => {
         }
         res.status('200').send({'status':true,'data':singleTask})
     }).catch((e) => {
-        res.status('400').send({'success':false,'data':error.message})
+        res.status('400').send({'success':false,'data':e})
     });
 });
 

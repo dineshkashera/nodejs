@@ -1,18 +1,20 @@
 const express = require('express');
 const router = new express.Router();
+const bcrypt = require('bcryptjs');
 
 const User = require('../model/user');//get user model
 
 //user route creation
 router.post('/user',async (req,res) => {
 
+   // res.status('201').send(req.body);
     const user = new User(req.body);
 
     try{
         await user.save();
-        res.status('201').send({'success':true,'data':'User created'});
+        res.status('201').send({'success':true,'data':user});
     }catch (e){
-        res.status('400').send({'success':false,'data':error.message});
+        res.status('400').send({'success':false,'data':e});
     }
     /*user.save().then(() => {
         res.status('201').send({'success':true,'data':'User created'});
@@ -27,7 +29,7 @@ router.get('/users',async (req,res) => {
         const getusers = await User.find({})
         res.status('200').send({'status':true,'data':getusers})
     }catch (e) {
-        res.status('400').send({'success':false,'data':error.message})
+        res.status('400').send({'success':false,'data':e})
     }
     /*User.find({}).then((getusers)=>{
         res.status('200').send({'status':true,'data':getusers})
