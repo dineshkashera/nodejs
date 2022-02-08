@@ -61,4 +61,13 @@ router.get('/user/:id',async (req,res) => {
     });*/
 });
 
+router.post('/user/login', async (req,res) => {
+    try{
+        const user = await User.findByCredentials(req.body.email, req.body.password);
+        res.status('200').send({'status':true,'message':'Login successfully','data':user});
+    }catch (e){
+        res.status('400').send({'status':false,'message':'Invalid credentials'});
+    }
+
+})
 module.exports = router;
