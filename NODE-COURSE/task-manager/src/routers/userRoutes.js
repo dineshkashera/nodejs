@@ -1,7 +1,7 @@
 const express = require('express');
 const router = new express.Router();
 const bcrypt = require('bcryptjs');
-
+const auth      = require('../middleware/auth');
 const User = require('../model/user');//get user model
 
 //user route creation
@@ -39,6 +39,10 @@ router.get('/users',async (req,res) => {
     });*/
 });
 
+//get profile
+router.get('/user/profile',auth, async (req,res) => {
+    res.status(200).send(req.user);
+})
 //get single user by id
 router.get('/user/:id',async (req,res) => {
 
