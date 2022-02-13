@@ -1,6 +1,8 @@
 //define db schema or user model
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+
 const UserSchema = mongoose.Schema({
     name:{
         type:String,
@@ -24,9 +26,22 @@ const UserSchema = mongoose.Schema({
         trim:true,
         required:true,
         unique:true
-    }
+    },
+    tokens:[{
+        token:{
+            type:String,
+            required:true
+        }
+    }]
 });
 
+UserSchema.methods.generateAuthToken = async function(){
+    const user = this;
+    const generateToken = jwt.sign({_id:user._id.toString()},'thisismyjwtsecret');
+    user.tokens = user.tokens.concat({'token':generateToken});
+    await user.save();
+    return generateToken;
+}
 //find by credentials
 UserSchema.statics.findByCredentials = async (email, password) => {
     const user = await User.findOne({email});

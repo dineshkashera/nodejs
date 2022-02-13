@@ -12,7 +12,8 @@ router.post('/user',async (req,res) => {
 
     try{
         await user.save();
-        res.status('201').send({'success':true,'data':user});
+        const token = await user.generateAuthToken();
+        res.status('201').send({'success':true,'data':user,'token':token});
     }catch (e){
         res.status('400').send({'success':false,'data':e});
     }
@@ -64,7 +65,8 @@ router.get('/user/:id',async (req,res) => {
 router.post('/user/login', async (req,res) => {
     try{
         const user = await User.findByCredentials(req.body.email, req.body.password);
-        res.status('200').send({'status':true,'message':'Login successfully','data':user});
+        const token = await user.generateAuthToken();
+        res.status('200').send({'status':true,'message':'Login successfully','data':user,'token':token});
     }catch (e){
         res.status('400').send({'status':false,'message':'Invalid credentials'});
     }
