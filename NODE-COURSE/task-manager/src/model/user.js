@@ -35,6 +35,17 @@ const UserSchema = mongoose.Schema({
     }]
 });
 
+//it behave live filter hook to hide the ptivate data
+UserSchema.methods.toJSON = function(){
+    const user = this;
+    const userObj = user.toObject();
+
+    delete userObj.tokens;
+    delete userObj.password;
+    delete userObj.__v;
+
+    return userObj;
+}
 UserSchema.methods.generateAuthToken = async function(){
     const user = this;
     const generateToken = jwt.sign({_id:user._id.toString()},'thisismyjwtsecret');
