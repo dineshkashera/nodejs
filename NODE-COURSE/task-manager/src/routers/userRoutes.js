@@ -24,7 +24,7 @@ router.post('/user',async (req,res) => {
     });*/
 });
 //get all users
-router.get('/users',async (req,res) => {
+router.get('/users',auth,async (req,res) => {
 
     try{
         const getusers = await User.find({})
@@ -44,7 +44,7 @@ router.get('/user/profile',auth, async (req,res) => {
     res.status(200).send(req.user);
 })
 //get single user by id
-router.get('/user/:id',async (req,res) => {
+router.get('/user/:id',auth, async (req,res) => {
 
     const _id = req.params.id;
     try{
@@ -75,5 +75,30 @@ router.post('/user/login', async (req,res) => {
         res.status('400').send({'status':false,'message':'Invalid credentials'});
     }
 
-})
+});
+
+//logout user
+router.post('/user/logout',auth,async (req,res) => {
+   try{
+       req.user.tokens = req.user.tokens.filter((token)=>{
+           return token.token !== req.token;
+       })
+       await req.user.save();
+       res.status(200).send();
+   }catch (e) {
+       res.status(501).send({error:true,message:'something wrong'});
+   }
+
+});
+
+//logout user
+router.post('/user/logoutall',auth,async (req,res) => {
+    try{
+        req.user.tokens = [];
+        await req.user.save();
+        res.status(200).send();
+    }catch (e) {
+        res.status(501).send({error:true,message:'something wrong'});
+    }
+});
 module.exports = router;
