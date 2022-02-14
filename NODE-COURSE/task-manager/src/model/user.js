@@ -35,7 +35,14 @@ const UserSchema = mongoose.Schema({
     }]
 });
 
-//it behave live filter hook to hide the ptivate data
+//To create virtual relationship between user and task,
+UserSchema.virtual('tasks',{
+    'ref':'task',
+    'localField':'_id',
+    'foreignField':'owner' //like we did in mysql
+})
+
+//it behave live filter hook to hide the private data
 UserSchema.methods.toJSON = function(){
     const user = this;
     const userObj = user.toObject();
