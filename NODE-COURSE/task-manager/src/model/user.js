@@ -33,6 +33,8 @@ const UserSchema = mongoose.Schema({
             required:true
         }
     }]
+},{
+    timestamps:true
 });
 
 //To create virtual relationship between user and task,

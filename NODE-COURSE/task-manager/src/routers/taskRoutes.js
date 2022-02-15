@@ -35,13 +35,33 @@ router.post('/task',auth,async (req, res)=>{
 });
 
 //get all task
-router.get('/tasks',(req,res) => {
+///tasks?completed=true to get the completed value we use req.query.completed but its value always comes in string will need to convert into bool
+//tasks?limit=10&skip=20
+router.get('/tasks',auth, async (req,res) => {
 
-    Task.find({}).then((getTasks)=>{
+    try{
+        await req.user.populate({
+            path:'tasks',
+            match:{
+                completed:false
+            },
+            options:{
+                limit:req.query.completed, //used in pagination or sorting
+                skip:req.query.skip,
+                sort:{
+                    completed:-1,//sort by desc, 1 sort by asc order
+                }
+            }
+        }).execPopulate();
+        res.status(200).send(req.user.tasks)
+    }catch (e) {
+        res.status(501).send({error:true,message:'Invalid request'})
+    }
+    /*Task.find({}).then((getTasks)=>{
         res.status('200').send({'status':true,'data':getTasks})
     }).catch((e) => {
         res.status('400').send({'success':false,'data':e})
-    });
+    });*/
 });
 
 //get single id
