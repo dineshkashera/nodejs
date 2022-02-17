@@ -103,7 +103,20 @@ router.post('/user/logoutall',auth,async (req,res) => {
     }
 });
 
-const upload = multer({ dest: 'avatars' }); //provide destination
+const upload = multer({
+    dest: 'avatars',
+    limits: {
+            fileSize:1000000
+        },
+    fileFilter:function(req,file,cb){
+        if(!file.originalname.match(/\.(pdf|doc|png|jpg|jpeg)$/)){
+            return cb(new Error('Not supported file'))
+        }
+        cb(undefined,true)
+    }
+}
+
+); //provide destination
 router.post('/user/me/avtar', upload.single('avatar'), function (req, res, next) {
     // req.file is the `avatar` file
     // req.body will hold the text fields, if there were any
