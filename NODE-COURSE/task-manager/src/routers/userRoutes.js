@@ -135,4 +135,18 @@ router.delete('/user/me/avtar',auth,async (req,res) => {
     req.user.save()
     res.status(200).send({status:true,message:'avtar deleted successfully'});
 })
+
+//get avtar
+router.get('/user/:id/avatar',auth,async (req,res) => {
+    try{
+        const user = await User.findById(req.params.id)
+        if(!user || !user.avatar){
+            throw new Error('not found')
+        }
+        res.set('Content-Type','image/png')
+        res.send(user.avatar);
+    }catch (e){
+        res.status(404).send({status:false,message:'image not found'})
+    }
+})
 module.exports = router;
