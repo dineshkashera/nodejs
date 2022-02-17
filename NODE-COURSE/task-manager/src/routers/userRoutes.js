@@ -104,12 +104,12 @@ router.post('/user/logoutall',auth,async (req,res) => {
 });
 
 const upload = multer({
-    dest: 'avatars',
+   // dest: 'avatars', set only when needs to set in folder
     limits: {
             fileSize:1000000
         },
     fileFilter:function(req,file,cb){
-        if(!file.originalname.match(/\.(pdf|doc|png|jpg|jpeg)$/)){
+        if(!file.originalname.match(/\.(png|jpg|jpeg)$/)){
             return cb(new Error('Not supported file'))
         }
         cb(undefined,true)
@@ -117,10 +117,22 @@ const upload = multer({
 }
 
 ); //provide destination
-router.post('/user/me/avtar', upload.single('avatar'), function (req, res, next) {
+
+//here we can pass multiple middleware
+router.post('/user/me/avtar', auth,upload.single('avatar'), async (req, res) => {
     // req.file is the `avatar` file
     // req.body will hold the text fields, if there were any
-    res.send();
+    req.user.avatar = req.file.buffer
+    await req.user.save()
+    res.status(200).send({status:true,message:'File uploaded successfully!'});
+},(error,req,res,next) => {
+    res.status(400).send({status:false,message:error.message})
 });
 
+//delete avatar
+router.delete('/user/me/avtar',auth,async (req,res) => {
+    req.user.avatar = undefined
+    req.user.save()
+    res.status(200).send({status:true,message:'avtar deleted successfully'});
+})
 module.exports = router;
