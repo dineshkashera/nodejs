@@ -3,6 +3,7 @@ const router = new express.Router();
 const bcrypt = require('bcryptjs');
 const auth      = require('../middleware/auth');
 const User = require('../model/user');//get user model
+const multer = require('multer');
 
 //user route creation
 router.post('/user',async (req,res) => {
@@ -101,4 +102,12 @@ router.post('/user/logoutall',auth,async (req,res) => {
         res.status(501).send({error:true,message:'something wrong'});
     }
 });
+
+const upload = multer({ dest: 'avatars' }); //provide destination
+router.post('/user/me/avtar', upload.single('avatar'), function (req, res, next) {
+    // req.file is the `avatar` file
+    // req.body will hold the text fields, if there were any
+    res.send();
+});
+
 module.exports = router;
