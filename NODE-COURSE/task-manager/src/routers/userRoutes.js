@@ -1,9 +1,9 @@
 const express = require('express');
 const router = new express.Router();
-const bcrypt = require('bcryptjs');
 const auth      = require('../middleware/auth');
 const User = require('../model/user');//get user model
-const multer = require('multer');
+const multer = require('multer');//use for file upload
+const sharp = require('sharp');//used for resize and formatting images
 
 //user route creation
 router.post('/user',async (req,res) => {
@@ -122,7 +122,8 @@ const upload = multer({
 router.post('/user/me/avtar', auth,upload.single('avatar'), async (req, res) => {
     // req.file is the `avatar` file
     // req.body will hold the text fields, if there were any
-    req.user.avatar = req.file.buffer
+    const tempbuffer = await sharp(req.file.buffer).resize({height:300,width:300}).png().toBuffer();
+    req.user.avatar = tempbuffer
     await req.user.save()
     res.status(200).send({status:true,message:'File uploaded successfully!'});
 },(error,req,res,next) => {
