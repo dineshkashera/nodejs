@@ -4,7 +4,8 @@
   "description": "chat application",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js -e js,hsb"
   },
   "keywords": [
     "chat"
@@ -14,6 +15,7 @@
   "dependencies": {
     "express": "^4.17.3",
     "hbs": "^4.2.0",
+    "nodemon": "^2.0.15",
     "path": "^0.12.7",
     "request": "^2.88.2"
   }
