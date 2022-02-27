@@ -21,5 +21,7 @@ document.querySelector('.chatboard form').addEventListener('submit',(e) => {
     const formData = new FormData(e.target);
     console.log('Form submitted');
     let getMessage = formData.get('message');
-    socket.emit('SendMessage',getMessage);
+    socket.emit('SendMessage',getMessage, (handshaking) => {
+        console.log(handshaking);//Means: message is received.
+    });
 })

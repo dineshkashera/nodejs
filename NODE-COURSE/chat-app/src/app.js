@@ -38,11 +38,25 @@ let count = 0;
         io.emit('countUpdated',count); // update to all user
  });
 });*/
+
+//Run short of code when given client is connected
 io.on('connection',(socket) => {
 
-    socket.emit('welcomeClient','Hi, Welcome to new chat board'); //add event and data for client, where we will get this data in client side using same event;
-    socket.on('SendMessage',(message) => {
+    //Three way to emit the messgage to browser
+    //1. socket.emit('eventname')//send to all client
+    //2. io.emit('eventname')//send to specific client
+    //3. socket.broadcast.emit('eventname')//send to all over the client except you.
+    socket.emit('welcomeClient','Hi, Welcome to new chat board'); //Send to you, add event and data for client, where we will get this data in client side using same event;
+
+    socket.broadcast.emit('welcomeClient','New user joined');//fire to everyone except you
+
+    socket.on('SendMessage',(message,acknowledgeSender) => {
         io.emit('welcomeClient',message);
+        acknowledgeSender('Message Received');
+    });
+
+    socket.on('disconnect', () => {
+       io.emit('welcomeClient','User get disconnected'); // send to all
     });
 });
 
