@@ -79,3 +79,10 @@ footer {
     background: transparent;
     color: #242943;
 }
+#messages {
+    border: 1px solid #efefef;
+    padding: 10px 20px;
+    border-radius: 14px;
+    margin-bottom: 20px;
+    background: #cdcdcd;
+}

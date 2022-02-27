@@ -1,5 +1,5 @@
 const socket = io();//create new instance
-
+const messageRender = document.querySelector('#messages');
 //receive the data from server using the same event
 socket.on('countUpdated',(count) => {
     console.log('Count updated',count);
@@ -13,7 +13,9 @@ incrementId.addEventListener('click', () => {
 });
 
 socket.on('welcomeClient', (welcomeMsg) => {
-    console.log(welcomeMsg);
+    let p = document.createElement(`p`);
+    p.innerHTML = welcomeMsg;
+    messageRender.append(p);
 });
 
 document.querySelector('.chatboard form').addEventListener('submit',(e) => {
