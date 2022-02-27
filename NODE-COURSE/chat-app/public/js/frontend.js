@@ -11,3 +11,15 @@ incrementId.addEventListener('click', () => {
     console.log('Click Increment Count');
     socket.emit('incrementCount');
 });
+
+socket.on('welcomeClient', (welcomeMsg) => {
+    console.log(welcomeMsg);
+});
+
+document.querySelector('.chatboard form').addEventListener('submit',(e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    console.log('Form submitted');
+    let getMessage = formData.get('message');
+    socket.emit('SendMessage',getMessage);
+})

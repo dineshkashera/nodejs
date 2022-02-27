@@ -29,7 +29,7 @@ app.use(router);
 //server (emit) -> client (receive) -> countupdated
 //client (emit) -> server (receive) -> increment
 let count = 0;
-io.on('connection',(socket) => {
+/*io.on('connection',(socket) => {
  console.log('New connection on');
  socket.emit('countUpdated',count); //add event and data for client, where we will get this data in client side using same event;
  socket.on('incrementCount',() => {
@@ -37,6 +37,13 @@ io.on('connection',(socket) => {
        // socket.emit('countUpdated',count); user specific
         io.emit('countUpdated',count); // update to all user
  });
+});*/
+io.on('connection',(socket) => {
+
+    socket.emit('welcomeClient','Hi, Welcome to new chat board'); //add event and data for client, where we will get this data in client side using same event;
+    socket.on('SendMessage',(message) => {
+        io.emit('welcomeClient',message);
+    });
 });
 
 server.listen(port,() => {
