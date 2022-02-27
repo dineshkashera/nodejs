@@ -25,8 +25,18 @@ hbs.registerPartials(hbsPartialPath);
 app.use(express.static(publicDirPath));
 app.use(router);
 
-io.on('connection',(port) => {
+//Socket io behaviour
+//server (emit) -> client (receive) -> countupdated
+//client (emit) -> server (receive) -> increment
+let count = 0;
+io.on('connection',(socket) => {
  console.log('New connection on');
+ socket.emit('countUpdated',count); //add event and data for client, where we will get this data in client side using same event;
+ socket.on('incrementCount',() => {
+        count++;
+       // socket.emit('countUpdated',count); user specific
+        io.emit('countUpdated',count); // update to all user
+ });
 });
 
 server.listen(port,() => {
