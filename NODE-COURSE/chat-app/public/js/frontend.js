@@ -1,6 +1,6 @@
 const socket = io();//create new instance
 const messageRender = document.querySelector('#messages');
-//receive the data from server using the same event
+//listener, receive the data from server using the same event
 socket.on('countUpdated',(count) => {
     console.log('Count updated',count);
 });
@@ -23,6 +23,7 @@ document.querySelector('.chatboard form').addEventListener('submit',(e) => {
     const formData = new FormData(e.target);
     console.log('Form submitted');
     let getMessage = formData.get('message');
+    //send message to client
     socket.emit('SendMessage',getMessage, (handshaking) => {
         console.log(handshaking);//Means: message is received.
     });

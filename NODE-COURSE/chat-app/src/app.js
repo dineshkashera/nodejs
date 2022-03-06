@@ -40,6 +40,8 @@ let count = 0;
 });*/
 
 //Run short of code when given client is connected
+//Now we need to make a connection from the server-side to the client-side
+//through which the server will be able to send data to the client.
 io.on('connection',(socket) => {
 
     //Three way to emit the messgage to browser
