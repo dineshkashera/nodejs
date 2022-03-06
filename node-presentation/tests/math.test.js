@@ -22,9 +22,7 @@ test('add two number',() => {
 })
 
 //test async code
-test('async test code',(done) => {
-    asynadd(3,5).then((sum) => {
-        expect(sum).toBe(8)
-        done()
-    })
+test('async test code',async () => {
+    const sum = await asynadd(3,5)
+    expect(sum).toBe(8)
 })
