@@ -4,8 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/index.js",
+    "test": "jest"
   },
-  "author": "",
-  "license": "ISC"
+  "author": "dineshkashera",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^27.5.1"
+  }
 }
